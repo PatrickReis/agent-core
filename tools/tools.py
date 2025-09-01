@@ -113,4 +113,7 @@ def echo_tool(message: str) -> str:
     return f"Echo: {message}"
 
 
-tools = [search_knowledge_base, echo_tool, simple_calculator]
+# Importar weather tools
+from .weather_tools import tools as weather_tools
+
+tools = [search_knowledge_base, echo_tool, simple_calculator] + weather_tools
