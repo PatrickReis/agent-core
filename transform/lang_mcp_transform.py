@@ -11,6 +11,9 @@ from typing import Any, Dict, List, Optional, Type
 from pydantic import BaseModel
 from langchain.tools.base import BaseTool
 from langchain_core.messages import HumanMessage
+from logger.logger import get_logger
+
+bridge_logger = get_logger("bridge")
 
 
 def _tool_metadata(lc_tool: BaseTool):
@@ -44,9 +47,9 @@ def register_langchain_tools_as_mcp(mcp, tools: List[BaseTool]):
     for lc_tool in tools:
         try:
             name, description, args_schema = _tool_metadata(lc_tool)
-            print(f"📝 Registrando tool: {name}")
+            bridge_logger.info(f"📝 Registrando tool: {name}")
         except Exception as e:
-            print(f"❌ Erro ao extrair metadados da tool {lc_tool}: {e}")
+            bridge_logger.error(f"❌ Erro ao extrair metadados da tool {lc_tool}: {e}")
             continue
 
         # Cria um wrapper assíncrono chamando lc_tool.invoke(...)
@@ -68,13 +71,17 @@ def register_langchain_tools_as_mcp(mcp, tools: List[BaseTool]):
             annotations["return"] = str
             sig = inspect.Signature(params)
 
-            async def wrapper(**kwargs):
-                # Executa tool síncrona em thread pool para não bloquear event loop
-                def _run():
-                    return lc_tool.invoke(kwargs)
+            def make_wrapper(tool):
+                async def wrapper(**kwargs):
+                    # Executa tool síncrona em thread pool para não bloquear event loop
+                    def _run():
+                        return tool.invoke(kwargs)
 
-                result = await asyncio.to_thread(_run)
-                return result if isinstance(result, str) else str(result)
+                    result = await asyncio.to_thread(_run)
+                    return result if isinstance(result, str) else str(result)
+                return wrapper
+            
+            wrapper = make_wrapper(lc_tool)
 
             # Injeta metadados para o FastMCP
             wrapper.__name__ = name
@@ -84,28 +91,31 @@ def register_langchain_tools_as_mcp(mcp, tools: List[BaseTool]):
 
             try:
                 mcp.tool()(wrapper)  # registra com nome=__name__ e docstring
-                print(f"Tool registrada com sucesso: {name}")
+                bridge_logger.info(f"Tool registrada com sucesso: {name}")
             except Exception as e:
-                print(f"Erro ao registrar tool estruturada {name}: {e}")
+                bridge_logger.error(f"Erro ao registrar tool estruturada {name}: {e}")
         else:
-            async def simple_wrapper(input: str) -> str:
-                def _run():
-                    try:
-                        return lc_tool.invoke(input)
-                    except TypeError:
-                        return lc_tool.invoke({"input": input})
+            def make_simple_wrapper(tool):
+                async def simple_wrapper(input: str) -> str:
+                    def _run():
+                        try:
+                            return tool.invoke(input)
+                        except TypeError:
+                            return tool.invoke({"input": input})
 
-                result = await asyncio.to_thread(_run)
-                return result if isinstance(result, str) else str(result)
-
+                    result = await asyncio.to_thread(_run)
+                    return result if isinstance(result, str) else str(result)
+                return simple_wrapper
+            
+            simple_wrapper = make_simple_wrapper(lc_tool)
             simple_wrapper.__name__ = name
             simple_wrapper.__doc__ = description
 
             try:
                 mcp.tool()(simple_wrapper)
-                print(f"Tool simples registrada com sucesso: {name}")
+                bridge_logger.info(f"Tool simples registrada com sucesso: {name}")
             except Exception as e:
-                print(f"Erro ao registrar tool simples {name}: {e}")
+                bridge_logger.error(f"Erro ao registrar tool simples {name}: {e}")
 
 
 def register_langgraph_agent_as_mcp(mcp, agent_function, agent_name: str = "langgraph_agent", 
@@ -119,7 +129,7 @@ def register_langgraph_agent_as_mcp(mcp, agent_function, agent_name: str = "lang
         agent_name: Nome da tool no MCP
         description: Descrição da tool
     """
-    print(f"📝 Registrando agente LangGraph: {agent_name}")
+    bridge_logger.info(f"📝 Registrando agente LangGraph: {agent_name}")
     
     # Cache do agente para evitar recompilação
     _agent_cache = None
@@ -131,10 +141,10 @@ def register_langgraph_agent_as_mcp(mcp, agent_function, agent_name: str = "lang
         try:
             # Usar cache do agente
             if _agent_cache is None:
-                print("🔧 Compilando agente LangGraph...")
+                bridge_logger.info("🔧 Compilando agente LangGraph...")
                 _agent_cache = agent_function()
             
-            print(f"🤖 Executando agente para: {user_message[:50]}...")
+            bridge_logger.info(f"🤖 Executando agente para: {user_message[:50]}...")
             
             # Executar agente em thread separada
             def _run_agent():
@@ -148,7 +158,7 @@ def register_langgraph_agent_as_mcp(mcp, agent_function, agent_name: str = "lang
             
         except Exception as e:
             error_msg = f"Erro no agente LangGraph: {str(e)}"
-            print(f"❌ {error_msg}")
+            bridge_logger.error(f"❌ {error_msg}")
             return error_msg
     
     # Configurar metadados da tool
@@ -158,9 +168,9 @@ def register_langgraph_agent_as_mcp(mcp, agent_function, agent_name: str = "lang
     # Registrar no MCP
     try:
         mcp.tool()(agent_wrapper)
-        print(f"Agente LangGraph '{agent_name}' registrado com sucesso")
+        bridge_logger.info(f"Agente LangGraph '{agent_name}' registrado com sucesso")
     except Exception as e:
-        print(f"Erro ao registrar agente LangGraph: {e}")
+        bridge_logger.error(f"Erro ao registrar agente LangGraph: {e}")
 
 
 __all__ = ["register_langchain_tools_as_mcp", "register_langgraph_agent_as_mcp"]

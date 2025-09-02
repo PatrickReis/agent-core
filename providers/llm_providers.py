@@ -195,21 +195,3 @@ def get_provider_info(provider_name: Optional[str] = None) -> dict:
         })
     
     return info
-
-
-if __name__ == "__main__":
-    # Teste do módulo
-    try:
-        info = get_provider_info()
-        print(f"✅ Provedor configurado: {info}")
-        
-        print(f"✅ Provedor: {info['provider']}")
-        print(f"✅ Configuração: {info}")
-        
-    except Exception as e:
-        print(f"❌ Erro: {e}")
-        print("\n💡 Dicas de solução:")
-        print("1. Verifique se o arquivo .env está configurado")
-        print("2. Instale as dependências: pip install -r requirements.txt")
-        print("3. Verifique se as API keys estão configuradas (para OpenAI/Gemini)")
-        print("4. Para Ollama, certifique-se de que está rodando: ollama serve")
