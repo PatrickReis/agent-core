@@ -1,0 +1,82 @@
+{
+  "features": {
+    "prompt_evaluation": {
+      "enabled": true,
+      "description": "Sistema de avaliação de prompts e qualidade de respostas",
+      "environments": ["dev", "staging"],
+      "rollout_percentage": 100,
+      "user_whitelist": [],
+      "dependencies": ["enhanced_logging"],
+      "metadata": {
+        "category": "evaluation",
+        "impact": "low",
+        "version": "1.0.0"
+      }
+    },
+    "advanced_reasoning": {
+      "enabled": true,
+      "description": "Sistema de reasoning multi-step com reflexão e análise complexa",
+      "environments": ["dev", "staging", "prod"],
+      "rollout_percentage": 100,
+      "user_whitelist": [],
+      "dependencies": ["enhanced_logging"],
+      "metadata": {
+        "category": "core",
+        "impact": "high",
+        "version": "1.0.0"
+      }
+    },
+    "oauth2_authentication": {
+      "enabled": false,
+      "description": "Autenticação OAuth2 para MCP Server e proteção de recursos",
+      "environments": ["staging", "prod"],
+      "rollout_percentage": 0,
+      "user_whitelist": ["admin", "beta_tester"],
+      "dependencies": [],
+      "metadata": {
+        "category": "security",
+        "impact": "high",
+        "version": "1.0.0"
+      }
+    },
+    "enhanced_logging": {
+      "enabled": true,
+      "description": "Sistema de logging estruturado com métricas e context tracing",
+      "environments": ["dev", "staging", "prod"],
+      "rollout_percentage": 100,
+      "user_whitelist": [],
+      "dependencies": [],
+      "metadata": {
+        "category": "observability",
+        "impact": "medium",
+        "version": "1.0.0"
+      }
+    },
+    "performance_monitoring": {
+      "enabled": true,
+      "description": "Monitoramento de performance, latência e recursos do sistema",
+      "environments": ["dev", "staging", "prod"],
+      "rollout_percentage": 100,
+      "user_whitelist": [],
+      "dependencies": ["enhanced_logging"],
+      "metadata": {
+        "category": "observability",
+        "impact": "low",
+        "version": "1.0.0"
+      }
+    },
+    "experimental_features": {
+      "enabled": false,
+      "description": "Features experimentais e em desenvolvimento ativo",
+      "environments": ["dev"],
+      "rollout_percentage": 25,
+      "user_whitelist": ["developer", "qa_tester"],
+      "dependencies": [],
+      "metadata": {
+        "category": "experimental",
+        "impact": "low",
+        "version": "0.1.0"
+      }
+    }
+  }
+}

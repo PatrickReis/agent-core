@@ -1,0 +1,83 @@
+# ================================
+# LAMBDA-SPECIFIC REQUIREMENTS
+# Dependências otimizadas para AWS Lambda
+# ================================
+
+# ================================
+# CORE LANGGRAPH DEPENDENCIES
+# ================================
+langgraph==0.6.6
+langchain==0.3.27
+langchain-community==0.3.29
+langchain-openai==0.3.32
+langchain-google-genai==2.1.10
+python-dotenv==1.0.0
+requests>=2.32.5
+
+# ================================
+# ENHANCED FEATURES (LAMBDA-OPTIMIZED)
+# ================================
+
+# OAuth2 and JWT (essential for production)
+PyJWT>=2.8.0
+cryptography>=41.0.0
+
+# ================================
+# AWS LAMBDA ESSENTIALS
+# ================================
+
+# AWS SDK (optimized versions for Lambda)
+boto3>=1.34.0
+botocore>=1.34.0
+
+# Lambda runtime utilities
+mangum>=0.17.0
+aws-lambda-powertools[logging,metrics,tracing]>=2.25.0
+
+# FastAPI for ASGI deployment
+fastapi>=0.104.0
+pydantic>=2.5.0
+
+# ================================
+# PERFORMANCE OPTIMIZATIONS
+# ================================
+
+# Fast JSON parsing
+orjson>=3.9.0
+
+# HTTP client optimizations
+httpx>=0.25.0
+
+# ================================
+# LOGGING AND MONITORING
+# ================================
+
+# Structured logging
+structlog>=23.0.0
+
+# ================================
+# OPTIONAL LAMBDA FEATURES
+# ================================
+
+# Uncomment if using ChromaDB in Lambda (not recommended for production)
+# chromadb==1.0.20
+
+# Uncomment if using Ollama in Lambda (not recommended for production)
+# langchain-ollama==0.3.7
+
+# ================================
+# NOTES FOR LAMBDA DEPLOYMENT
+# ================================
+#
+# 1. ChromaDB and Ollama are excluded by default as they're not suitable for Lambda
+# 2. For vector search in Lambda, consider using AWS OpenSearch or Pinecone
+# 3. For local LLM, use hosted options like OpenAI, Anthropic, or AWS Bedrock
+# 4. Keep total package size under 250MB (unzipped) for optimal performance
+# 5. Use Lambda layers for heavy dependencies when possible
+#
+# Recommended Lambda configuration:
+# - Memory: 1024MB - 3008MB (depending on model size)
+# - Timeout: 300 seconds (maximum for API Gateway)
+# - Runtime: python3.11 or python3.12
+# - Architecture: x86_64 (better compatibility) or arm64 (better performance/cost)
+#

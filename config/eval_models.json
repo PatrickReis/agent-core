@@ -1,0 +1,471 @@
+{
+  "models": {
+    "gpt4": {
+      "name": "OpenAI GPT-4",
+      "description": "OpenAI GPT-4 - Modelo mais avançado da OpenAI",
+      "provider": "openai",
+      "model_id": "gpt-4",
+      "api_key_env": "OPENAI_API_KEY",
+      "base_url": null,
+      "parameters": {
+        "temperature": 0.1,
+        "max_tokens": 1500,
+        "top_p": 1.0
+      },
+      "enabled": true,
+      "cost_per_token": {
+        "input": 0.03,
+        "output": 0.06
+      },
+      "metadata": {
+        "category": "commercial",
+        "context_window": 8192,
+        "multimodal": true
+      }
+    },
+
+    "gpt3.5": {
+      "name": "OpenAI GPT-3.5 Turbo",
+      "description": "OpenAI GPT-3.5 Turbo - Rápido e econômico",
+      "provider": "openai",
+      "model_id": "gpt-3.5-turbo",
+      "api_key_env": "OPENAI_API_KEY",
+      "parameters": {
+        "temperature": 0.1,
+        "max_tokens": 1000
+      },
+      "enabled": true,
+      "cost_per_token": {
+        "input": 0.001,
+        "output": 0.002
+      },
+      "metadata": {
+        "category": "commercial",
+        "context_window": 4096,
+        "multimodal": false
+      }
+    },
+
+    "claude_sonnet": {
+      "name": "Claude 3 Sonnet",
+      "description": "Anthropic Claude 3 Sonnet - Balance entre performance e custo",
+      "provider": "anthropic",
+      "model_id": "claude-3-sonnet-20240229",
+      "api_key_env": "ANTHROPIC_API_KEY",
+      "parameters": {
+        "temperature": 0.1,
+        "max_tokens": 1500
+      },
+      "enabled": true,
+      "cost_per_token": {
+        "input": 0.003,
+        "output": 0.015
+      },
+      "metadata": {
+        "category": "commercial",
+        "context_window": 200000,
+        "multimodal": true
+      }
+    },
+
+    "claude_haiku": {
+      "name": "Claude 3 Haiku",
+      "description": "Anthropic Claude 3 Haiku - Rápido e econômico",
+      "provider": "anthropic",
+      "model_id": "claude-3-haiku-20240307",
+      "api_key_env": "ANTHROPIC_API_KEY",
+      "parameters": {
+        "temperature": 0.1,
+        "max_tokens": 1000
+      },
+      "enabled": true,
+      "cost_per_token": {
+        "input": 0.00025,
+        "output": 0.00125
+      },
+      "metadata": {
+        "category": "commercial",
+        "context_window": 200000,
+        "multimodal": true
+      }
+    },
+
+    "local_agent": {
+      "name": "Agent Core Local",
+      "description": "Agente local do Agent Core via LangGraph",
+      "provider": "local",
+      "model_id": "agent_core_enhanced",
+      "api_key_env": null,
+      "parameters": {
+        "use_tools": true,
+        "reasoning_enabled": true
+      },
+      "enabled": true,
+      "cost_per_token": {
+        "input": 0.0,
+        "output": 0.0
+      },
+      "metadata": {
+        "category": "local",
+        "context_window": "variable",
+        "multimodal": false,
+        "features": ["weather", "knowledge_base", "reasoning"]
+      }
+    },
+
+    "mock_agent": {
+      "name": "Mock Agent",
+      "description": "Agente simulado para testes e desenvolvimento",
+      "provider": "mock",
+      "model_id": "mock_v1",
+      "api_key_env": null,
+      "parameters": {
+        "response_time": 0.1,
+        "simulate_errors": false
+      },
+      "enabled": true,
+      "cost_per_token": {
+        "input": 0.0,
+        "output": 0.0
+      },
+      "metadata": {
+        "category": "testing",
+        "context_window": "unlimited",
+        "multimodal": false
+      }
+    },
+
+    "llama3_ollama": {
+      "name": "Llama 3 via Ollama",
+      "description": "Meta Llama 3 executando localmente via Ollama",
+      "provider": "ollama",
+      "model_id": "llama3:latest",
+      "api_key_env": null,
+      "base_url": "http://localhost:11434",
+      "parameters": {
+        "temperature": 0.1,
+        "max_tokens": 2000
+      },
+      "enabled": true,
+      "cost_per_token": {
+        "input": 0.0,
+        "output": 0.0
+      },
+      "metadata": {
+        "category": "local",
+        "context_window": 8192,
+        "multimodal": false,
+        "provider_type": "ollama"
+      }
+    },
+
+    "gpt_oss_ollama": {
+      "name": "GPT-OSS via Ollama",
+      "description": "GPT Open Source model executando via Ollama",
+      "provider": "ollama",
+      "model_id": "gpt-oss:latest",
+      "api_key_env": null,
+      "base_url": "http://localhost:11434",
+      "parameters": {
+        "temperature": 0.1,
+        "max_tokens": 2000
+      },
+      "enabled": true,
+      "cost_per_token": {
+        "input": 0.0,
+        "output": 0.0
+      },
+      "metadata": {
+        "category": "local",
+        "context_window": 4096,
+        "multimodal": false,
+        "provider_type": "ollama"
+      }
+    },
+
+    "gemini_15_flash": {
+      "name": "Google Gemini 1.5 Flash",
+      "description": "Google Gemini 1.5 Flash - Rápido e eficiente",
+      "provider": "gemini",
+      "model_id": "gemini-1.5-flash",
+      "api_key_env": "GEMINI_API_KEY",
+      "base_url": null,
+      "parameters": {
+        "temperature": 0.1,
+        "max_tokens": 2000
+      },
+      "enabled": true,
+      "cost_per_token": {
+        "input": 0.000125,
+        "output": 0.000375
+      },
+      "metadata": {
+        "category": "commercial",
+        "context_window": 1048576,
+        "multimodal": true,
+        "provider_type": "google"
+      }
+    }
+  },
+
+  "test_suites": {
+    "basic": {
+      "name": "Testes Básicos",
+      "description": "Conhecimento geral e perguntas simples",
+      "test_cases": [
+        {
+          "id": "python_basic",
+          "prompt": "O que é Python?",
+          "expected": "Python é uma linguagem de programação interpretada",
+          "tags": ["programming", "basic"],
+          "weight": 1.0
+        },
+        {
+          "id": "brasil_capital",
+          "prompt": "Qual é a capital do Brasil?",
+          "expected": "Brasília",
+          "tags": ["geography", "basic"],
+          "weight": 1.0
+        },
+        {
+          "id": "circle_area",
+          "prompt": "Como calcular a área de um círculo?",
+          "expected": "A = π × r²",
+          "tags": ["math", "formula"],
+          "weight": 1.0
+        },
+        {
+          "id": "ai_definition",
+          "prompt": "Explique inteligência artificial em uma frase",
+          "tags": ["tech", "ai"],
+          "weight": 1.0
+        }
+      ],
+      "evaluators": ["relevance", "accuracy", "safety"],
+      "timeout": 30
+    },
+
+    "reasoning": {
+      "name": "Raciocínio e Lógica",
+      "description": "Testes de capacidade de raciocínio",
+      "test_cases": [
+        {
+          "id": "sky_blue",
+          "prompt": "Por que o céu é azul? Explique de forma simples.",
+          "tags": ["science", "explanation"],
+          "weight": 1.5
+        },
+        {
+          "id": "logical_deduction",
+          "prompt": "Se todos os gatos são animais e alguns animais voam, alguns gatos voam?",
+          "expected": "Não, não podemos concluir isso",
+          "tags": ["logic", "deduction"],
+          "weight": 2.0
+        },
+        {
+          "id": "energy_comparison",
+          "prompt": "Compare os prós e contras da energia solar versus nuclear",
+          "tags": ["analysis", "comparison"],
+          "weight": 1.5
+        },
+        {
+          "id": "cause_effect",
+          "prompt": "Explique a relação entre causa e efeito na programação",
+          "tags": ["programming", "concept"],
+          "weight": 1.0
+        }
+      ],
+      "evaluators": ["relevance", "accuracy", "tool_usage"],
+      "timeout": 60
+    },
+
+    "technical": {
+      "name": "Conhecimento Técnico",
+      "description": "Perguntas sobre tecnologia e programação",
+      "test_cases": [
+        {
+          "id": "ml_explanation",
+          "prompt": "Explique machine learning em duas frases",
+          "tags": ["ai", "ml", "explanation"],
+          "weight": 1.5
+        },
+        {
+          "id": "http_vs_https",
+          "prompt": "Qual a diferença entre HTTP e HTTPS?",
+          "expected": "HTTPS é HTTP com criptografia SSL/TLS",
+          "tags": ["web", "security"],
+          "weight": 1.0
+        },
+        {
+          "id": "internet_basics",
+          "prompt": "Como funciona a internet?",
+          "tags": ["networking", "infrastructure"],
+          "weight": 1.5
+        },
+        {
+          "id": "api_concept",
+          "prompt": "O que são APIs e para que servem?",
+          "tags": ["api", "development"],
+          "weight": 1.0
+        }
+      ],
+      "evaluators": ["relevance", "accuracy", "safety"],
+      "timeout": 45
+    },
+
+    "performance": {
+      "name": "Teste de Performance",
+      "description": "Respostas rápidas e diretas",
+      "test_cases": [
+        {
+          "id": "math_simple",
+          "prompt": "Quanto é 2 + 2?",
+          "expected": "4",
+          "tags": ["math", "simple"],
+          "weight": 0.5
+        },
+        {
+          "id": "france_capital",
+          "prompt": "Capital da França?",
+          "expected": "Paris",
+          "tags": ["geography", "quick"],
+          "weight": 0.5
+        },
+        {
+          "id": "python_compiled",
+          "prompt": "Python é compilado ou interpretado?",
+          "expected": "Interpretado",
+          "tags": ["programming", "quick"],
+          "weight": 0.5
+        },
+        {
+          "id": "primary_color",
+          "prompt": "Nome uma cor primária",
+          "tags": ["art", "basic"],
+          "weight": 0.5
+        }
+      ],
+      "evaluators": ["relevance", "accuracy", "latency"],
+      "timeout": 10
+    },
+
+    "tools_usage": {
+      "name": "Uso de Ferramentas",
+      "description": "Testes específicos para uso de tools",
+      "test_cases": [
+        {
+          "id": "weather_sao_paulo",
+          "prompt": "Qual a temperatura em São Paulo hoje?",
+          "tags": ["weather", "tool_required"],
+          "weight": 2.0,
+          "requires_tool": "get_weather"
+        },
+        {
+          "id": "weather_london",
+          "prompt": "Como está o clima em Londres?",
+          "tags": ["weather", "tool_required"],
+          "weight": 2.0,
+          "requires_tool": "get_weather"
+        },
+        {
+          "id": "knowledge_search",
+          "prompt": "Busque informações sobre computação quântica",
+          "tags": ["search", "tool_required"],
+          "weight": 1.5,
+          "requires_tool": "search_knowledge_base"
+        }
+      ],
+      "evaluators": ["relevance", "accuracy", "tool_usage", "latency"],
+      "timeout": 60
+    }
+  },
+
+  "evaluator_configs": {
+    "relevance": {
+      "weight": 1.0,
+      "pass_threshold": 70,
+      "description": "Relevância da resposta ao prompt"
+    },
+    "accuracy": {
+      "weight": 1.5,
+      "pass_threshold": 70,
+      "description": "Precisão da resposta comparada ao esperado"
+    },
+    "latency": {
+      "weight": 0.8,
+      "pass_threshold": 70,
+      "target_latency": 2.0,
+      "description": "Tempo de resposta"
+    },
+    "safety": {
+      "weight": 2.0,
+      "pass_threshold": 90,
+      "description": "Segurança do conteúdo"
+    },
+    "tool_usage": {
+      "weight": 1.2,
+      "pass_threshold": 70,
+      "description": "Uso apropriado de ferramentas"
+    }
+  },
+
+  "comparison_presets": {
+    "gpt_vs_claude": {
+      "name": "GPT vs Claude",
+      "description": "Comparação entre principais modelos comerciais",
+      "models": ["gpt4", "claude_sonnet"],
+      "suites": ["basic", "reasoning", "technical"],
+      "focus": "overall_performance"
+    },
+
+    "cost_efficiency": {
+      "name": "Análise Custo-Benefício",
+      "description": "Modelos econômicos vs premium",
+      "models": ["gpt3.5", "claude_haiku", "local_agent"],
+      "suites": ["basic", "performance"],
+      "focus": "cost_per_performance"
+    },
+
+    "local_vs_remote": {
+      "name": "Local vs Remoto",
+      "description": "Agente local vs modelos comerciais",
+      "models": ["local_agent", "gpt4", "claude_sonnet"],
+      "suites": ["tools_usage", "reasoning"],
+      "focus": "feature_comparison"
+    },
+
+    "comprehensive": {
+      "name": "Avaliação Completa",
+      "description": "Todos os modelos e suites",
+      "models": ["gpt4", "gpt3.5", "claude_sonnet", "claude_haiku", "local_agent"],
+      "suites": ["basic", "reasoning", "technical", "performance"],
+      "focus": "comprehensive_analysis"
+    },
+
+    "llama_vs_gemini": {
+      "name": "Llama vs Gemini",
+      "description": "Local Llama 3 vs Google Gemini 1.5",
+      "models": ["llama3_ollama", "gemini_15_flash"],
+      "suites": ["basic", "reasoning", "technical"],
+      "focus": "local_vs_cloud_comparison"
+    },
+
+    "ollama_models": {
+      "name": "Comparação Ollama",
+      "description": "Modelos locais executando no Ollama",
+      "models": ["llama3_ollama", "gpt_oss_ollama"],
+      "suites": ["basic", "performance", "reasoning"],
+      "focus": "local_models_comparison"
+    }
+  },
+
+  "settings": {
+    "default_timeout": 30,
+    "max_concurrent_evaluations": 3,
+    "retry_failed_tests": true,
+    "save_detailed_logs": true,
+    "output_formats": ["json", "html", "csv"],
+    "auto_save_results": true,
+    "results_directory": "eval_results"
+  }
+}
