@@ -95,7 +95,7 @@ class ModelComparisonFramework:
         self.eval_framework = EvalFramework() if EVALS_AVAILABLE else None
         self.models: Dict[str, ModelConfig] = {}
         self.test_suites: Dict[str, List[Dict[str, Any]]] = {}
-        self._load_default_models()
+        self._load_models_from_config()
         self._load_default_test_suites()
 
     def _load_default_models(self):
@@ -136,6 +136,40 @@ class ModelComparisonFramework:
 
         for model in default_models:
             self.models[model.name] = model
+
+    def _load_models_from_config(self):
+        """Carrega modelos do arquivo de configuração JSON."""
+        # Primeiro carrega os modelos padrão como fallback
+        self._load_default_models()
+
+        # Tentar carregar do arquivo de configuração
+        config_file = Path("config/eval_models.json")
+        if config_file.exists():
+            try:
+                with open(config_file, 'r', encoding='utf-8') as f:
+                    config_data = json.load(f)
+
+                models_config = config_data.get("models", {})
+                for model_name, model_data in models_config.items():
+                    self.models[model_name] = ModelConfig(
+                        name=model_name,
+                        description=model_data.get("description", ""),
+                        provider=model_data.get("provider", ""),
+                        model_id=model_data.get("model_id", ""),
+                        api_key_env=model_data.get("api_key_env"),
+                        base_url=model_data.get("base_url"),
+                        parameters=model_data.get("parameters", {}),
+                        enabled=model_data.get("enabled", True)
+                    )
+
+                print(f"✅ Carregados {len(models_config)} modelos do arquivo de configuração")
+
+            except Exception as e:
+                print(f"⚠️ Erro ao carregar config/eval_models.json: {e}")
+                print("Usando apenas modelos padrão")
+        else:
+            print("⚠️ Arquivo config/eval_models.json não encontrado")
+            print("Usando apenas modelos padrão")
 
     def _load_default_test_suites(self):
         """Carrega suites de teste padrão."""
